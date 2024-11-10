@@ -1,0 +1,19 @@
+{
+    "name": "the-movie-database",
+    "private": true,
+    "packageManager": "pnpm@8.15.6",
+    "scripts": {
+        "build": "turbo build",
+        "dev": "turbo dev",
+        "lint": "turbo lint",
+        "format": "turbo format"
+    },
+    "devDependencies": {
+        "prettier": "3.3.3",
+        "turbo": "2.2.3",
+        "typescript": "5.5.4"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "appName": "films-app-api",
+    "auth": {
+        "secret": "secret",
+        "expiresIn": "14d"
+    },
+    "tmdb": {
+        "baseUrl": "https://api.themoviedb.org/3"
+    }
+}

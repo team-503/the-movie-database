@@ -1,0 +1,10 @@
+{
+    "extends": "@repo/config-typescript/nest.json",
+    "compilerOptions": {
+        "incremental": false,
+        "declaration": false,
+        "outDir": "./dist"
+    },
+    "include": ["."],
+    "exclude": ["dist", "build", "node_modules"]
+}
