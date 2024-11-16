@@ -10,6 +10,9 @@
     "exports": {
         ".": "./tailwind.config.ts"
     },
+    "dependencies": {
+        "tailwindcss-animate": "1.0.7"
+    },
     "devDependencies": {
         "@repo/config-typescript": "workspace:*",
         "@types/node": "20.3.1",

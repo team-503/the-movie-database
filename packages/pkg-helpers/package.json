@@ -17,9 +17,11 @@
     "dependencies": {
         "@repo/dto": "workspace:*",
         "assert-ts": "0.3.4",
+        "clsx": "^2.1.1",
         "config": "3.3.12",
         "dayjs": "1.11.13",
         "exceljs": "4.4.0",
+        "tailwind-merge": "^2.5.4",
         "typeorm": "0.3.20"
     },
     "devDependencies": {
