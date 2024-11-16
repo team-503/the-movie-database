@@ -14,7 +14,7 @@ export const createLogger = (
         logLevel: 'info',
         logFile: undefined,
         isDevelopment: false,
-    },
+    }
 ) => {
     return createWinstonLogger({
         level: logLevel,

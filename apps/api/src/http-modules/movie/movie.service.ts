@@ -18,7 +18,7 @@ export class MovieService {
         private readonly cacheManager: Cache,
         private readonly tmdbService: TMDBService,
         private readonly movieRepository: MovieRepository,
-        private readonly movieDetailsRepository: MovieDetailsRepository,
+        private readonly movieDetailsRepository: MovieDetailsRepository
     ) {}
 
     /*

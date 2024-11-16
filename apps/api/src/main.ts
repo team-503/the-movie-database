@@ -30,7 +30,7 @@ const bootstrap = async () => {
                     frameSrc: [`'self'`, 'sandbox.embed.apollographql.com'],
                 },
             },
-        }),
+        })
     )
     app.use(cookieParser())
     app.enableCors({ origin: '*' })
@@ -41,7 +41,7 @@ const bootstrap = async () => {
                 logger.error(new CustomValidationError(validationErrors))
                 return new BadRequestException(validationErrors)
             },
-        }),
+        })
     )
     app.useGlobalInterceptors(new ErrorInterceptor())
     await app.listen(PORT)

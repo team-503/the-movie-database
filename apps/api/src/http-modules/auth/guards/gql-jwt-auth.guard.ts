@@ -15,7 +15,7 @@ export class GqlJwtAuthGuard extends AuthGuard(JWT_STRATEGY_NAME) {
         user: unknown,
         info: unknown,
         context: ExecutionContext,
-        status?: unknown,
+        status?: unknown
     ): TUser {
         if (!user) {
             throw new UnauthorizedException('Missing auth header or invalid token')

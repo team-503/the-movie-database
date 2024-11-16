@@ -1,5 +1,5 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql"
-import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @ObjectType({ isAbstract: true })
 export class BaseMovieEntity {

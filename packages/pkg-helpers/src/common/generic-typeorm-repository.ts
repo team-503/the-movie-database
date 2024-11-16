@@ -19,7 +19,7 @@ export class GenericTypeOrmRepository<
 > extends Repository<TEntity> {
     constructor(
         private entity: new () => TEntity,
-        private dataSource: DataSource,
+        private dataSource: DataSource
     ) {
         super(entity, dataSource.createEntityManager())
     }
@@ -47,7 +47,7 @@ export class GenericTypeOrmRepository<
     // @ts-ignore
     override update(
         criteria: string | string[] | number | number[] | Date | Date[] | ObjectId | ObjectId[] | FindOptionsWhere<TEntity>,
-        partialEntity: TUpdate,
+        partialEntity: TUpdate
     ): Promise<UpdateResult> {
         return super.update(criteria, partialEntity as QueryDeepPartialEntity<TEntity>)
     }
@@ -55,11 +55,11 @@ export class GenericTypeOrmRepository<
     // @ts-ignore
     override upsert(
         entityOrEntities: TUpdate | TUpdate[],
-        conflictPathsOrOptions: string[] | UpsertOptions<TEntity>,
+        conflictPathsOrOptions: string[] | UpsertOptions<TEntity>
     ): Promise<InsertResult> {
         return super.upsert(
             entityOrEntities as QueryDeepPartialEntity<TEntity> | QueryDeepPartialEntity<TEntity>[],
-            conflictPathsOrOptions,
+            conflictPathsOrOptions
         )
     }
 }

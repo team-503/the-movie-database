@@ -87,7 +87,7 @@ export class TMDBService implements OnModuleInit {
         const response = await firstValueFrom(this.httpService.get<MovieImagesResponse>(`movie/${movieId}/images`, { params }))
         return response.data
     }
-    
+
     async getSimilarMovies(movieId: number, params: TMDBSimilarMoviesRequest = {}): Promise<PaginatedMovieResponse> {
         const response = await firstValueFrom(this.httpService.get(`movie/${movieId}/similar`, { params }))
         return response.data
@@ -95,7 +95,7 @@ export class TMDBService implements OnModuleInit {
 
     async getMovieRecommendations(
         movieId: number,
-        params: TMDBMovieRecommendationsRequest = {},
+        params: TMDBMovieRecommendationsRequest = {}
     ): Promise<PaginatedMovieResponse> {
         const response = await firstValueFrom(this.httpService.get(`movie/${movieId}/recommendations`, { params }))
         return response.data

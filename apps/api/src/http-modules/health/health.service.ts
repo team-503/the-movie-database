@@ -14,7 +14,7 @@ export class HealthService {
         private readonly http: HttpHealthIndicator,
         private readonly typeorm: TypeOrmHealthIndicator,
         private readonly disk: DiskHealthIndicator,
-        private readonly memory: MemoryHealthIndicator,
+        private readonly memory: MemoryHealthIndicator
     ) {}
 
     healthcheck() {

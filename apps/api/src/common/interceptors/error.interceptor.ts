@@ -10,7 +10,7 @@ export class ErrorInterceptor implements NestInterceptor {
             catchError(error => {
                 logger.error(`Error occurred: ${error.message}`, error.stack)
                 return throwError(() => error)
-            }),
+            })
         )
     }
 }
