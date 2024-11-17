@@ -1,4 +1,8 @@
-/** @type {import("prettier").Config} */
+/** @typedef  {import("@ianvs/prettier-plugin-sort-imports").PluginConfig} SortImportsConfig*/
+/** @typedef  {import("prettier").Config} PrettierConfig*/
+/** @typedef  {{ tailwindConfig: string }} TailwindConfig*/
+
+/** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
 module.exports = {
     printWidth: 130,
     tabWidth: 4,
@@ -32,10 +36,5 @@ module.exports = {
     ],
     importOrderTypeScriptVersion: '4.4.0', // Last version that doesn't squash type and value imports
     importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
-    // importOrderSeparation: false,
-    // importOrderSortSpecifiers: true,
-    // importOrderBuiltinModulesToTop: true,
-    // importOrderMergeDuplicateImports: true,
-    // importOrderCombineTypeAndValueImports: true,
     plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
 }

@@ -1,6 +1,7 @@
 pnpm-lock.yaml
 
 apps/api/LOCAL
+apps/www/src/__generated__
 
 .turbo
 
