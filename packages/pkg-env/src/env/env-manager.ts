@@ -9,7 +9,10 @@ export class EnvManager<TSchema extends ZodTypeAny> {
     private validator: EnvValidator
     private schema: ZodSchema<TSchema>
 
-    constructor(schema: TSchema, envFilesPaths: string[] = []) {
+    constructor(
+        schema: TSchema,
+        { envFilesPaths, processEnv }: { envFilesPaths?: string[]; processEnv?: typeof process.env } = { envFilesPaths: [] }
+    ) {
         this.schema = schema
         this.loader = new EnvLoader()
         this.validator = new EnvValidator()
@@ -17,10 +20,11 @@ export class EnvManager<TSchema extends ZodTypeAny> {
             NODE_ENV: process.env.NODE_ENV,
         }
 
-        envFilesPaths.forEach(filePath => {
+        envFilesPaths?.forEach(filePath => {
             const loadedEnv = this.loader.loadEnv(filePath)
             this.envVars = { ...this.envVars, ...loadedEnv }
         })
+        this.envVars = { ...this.envVars, ...(processEnv || {}) }
 
         this.validateEnv()
     }
