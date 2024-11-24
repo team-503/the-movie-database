@@ -1,9 +1,9 @@
+import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genres-response'
+import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
+import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
+import { MovieDetailsEntity } from '@/db/movie-details.entity'
+import { MovieService } from '@/http-modules/movie/movie.service'
 import { Args, Int, Query, Resolver } from '@nestjs/graphql'
-import { MovieDetailsEntity } from '../../db/movie-details.entity'
-import { MovieGenresResponse } from '../../dto/movie/response-dto/movie-genres-response'
-import { MovieImagesResponse } from '../../dto/movie/response-dto/movie-images-response'
-import { PaginatedMovieResponse } from '../../dto/movie/response-dto/paginated-movie-response'
-import { MovieService } from './movie.service'
 
 @Resolver()
 // @UseGuards(GqlJwtAuthGuard)

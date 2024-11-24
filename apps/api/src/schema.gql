@@ -105,6 +105,16 @@ type PaginatedMovieResponse {
   total_results: Int!
 }
 
+type UserOutput {
+  id: Int!
+  email: String!
+}
+
+type AuthResponseType {
+  token: String!
+  user: UserOutput!
+}
+
 type Query {
   getMovieGenresList: MovieGenresResponse!
   discoverMovies: PaginatedMovieResponse!
@@ -116,4 +126,21 @@ type Query {
   getMovieImages(movieId: Int!): MovieImagesResponse!
   getSimilarMovies(movieId: Int!): PaginatedMovieResponse!
   getMovieRecommendations(movieId: Int!): PaginatedMovieResponse!
+  me: UserEntity!
+}
+
+type UserEntity {
+  id: Int!
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  login(user: UserInput!): AuthResponseType!
+  register(user: UserInput!): AuthResponseType!
+}
+
+input UserInput {
+  email: String!
+  password: String!
 }

@@ -7,4 +7,4 @@ const envSchema = z.object({
     TMDB_API_KEY: z.string(),
 })
 
-export const ENV = new EnvManager(envSchema, ['.env']).getEnv()
+export const ENV = new EnvManager(envSchema, { envFilesPaths: ['.env'] }).getEnv()

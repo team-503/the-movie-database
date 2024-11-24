@@ -25,7 +25,7 @@ export class HealthService {
 
     terminusHealth() {
         return this.healthCheck.check([
-            () => this.http.pingCheck('some nestjs docs external api', 'https://docs.nestjs.com'),
+            // () => this.http.pingCheck('some nestjs docs external api', 'https://docs.nestjs.com'),
             () => this.typeorm.pingCheck('typeorm'),
             /**
              * would be unhealthy in case the path / would exceed 80% or 250 GB

@@ -1,13 +1,13 @@
+import { MovieBelongsToCollection } from '@/common/dto/movie/movie-belongs-to-collection'
+import { MovieGenre } from '@/common/dto/movie/movie-genre'
+import { MovieProductionCompany } from '@/common/dto/movie/movie-production-company'
+import { MovieProductionCountry } from '@/common/dto/movie/movie-production-country'
+import { MovieSpokenLanguage } from '@/common/dto/movie/movie-spoken-language'
+import { BaseMovieEntity } from '@/db/base-movie.entity'
 import { Injectable } from '@nestjs/common'
 import { Field, Float, ObjectType } from '@nestjs/graphql'
 import { CreateTypeOrmEntity, GenericTypeOrmRepository, TypeORMHelper, UpdateTypeOrmEntity } from '@repo/pkg-helpers'
 import { Column, DataSource, Entity } from 'typeorm'
-import { MovieBelongsToCollection } from '../dto/movie/movie-belongs-to-collection'
-import { MovieGenre } from '../dto/movie/movie-genre'
-import { MovieProductionCompany } from '../dto/movie/movie-production-company'
-import { MovieProductionCountry } from '../dto/movie/movie-production-country'
-import { MovieSpokenLanguage } from '../dto/movie/movie-spoken-language'
-import { BaseMovieEntity } from './base-movie.entity'
 
 const tableName = TypeORMHelper.getPrefixedTableName('movies_details')
 

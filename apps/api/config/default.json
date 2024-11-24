@@ -1,8 +1,13 @@
 {
     "appName": "films-app-api",
+    "port": 4000,
     "auth": {
+        "saltOrRounds": 10,
         "secret": "secret",
         "expiresIn": "14d"
+    },
+    "db": {
+        "url": "./LOCAL/db.sqlite"
     },
     "tmdb": {
         "baseUrl": "https://api.themoviedb.org/3"

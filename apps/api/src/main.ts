@@ -1,15 +1,17 @@
+import { AppModule } from '@/app.module'
+import { CustomValidationError } from '@/common/errors/custom-validation-error'
+import { ErrorInterceptor } from '@/common/interceptors/error.interceptor'
 import { BadRequestException, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { logger } from '@repo/pkg-logger'
+import bodyParser from 'body-parser'
 import { ValidationError } from 'class-validator'
+import config from 'config'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
-import { AppModule } from './app.module'
-import { CustomValidationError } from './common/errors/custom-validation-error'
-import { ErrorInterceptor } from './common/interceptors/error.interceptor'
 
 const bootstrap = async () => {
-    const PORT = process.env.PORT ?? 4000
+    const PORT = process.env.PORT ?? config.get<number>('port') ?? 4000
 
     process.on('uncaughtException', (error, origin) => {
         console.error('uncaughtException: ', error, 'Origin:', origin)
@@ -34,6 +36,8 @@ const bootstrap = async () => {
     )
     app.use(cookieParser())
     app.enableCors({ origin: '*' })
+    app.use(bodyParser.json())
+    app.use(bodyParser.urlencoded({ extended: true }))
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,

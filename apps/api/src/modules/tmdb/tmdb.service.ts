@@ -1,21 +1,21 @@
+import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genres-response'
+import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
+import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
+import { MovieDetailsEntity } from '@/db/movie-details.entity'
+import { TMDBDiscoverMovieRequest } from '@/modules/tmdb/types/tmdb-discover-movies-request'
+import { TMDBMovieDetailsRequest } from '@/modules/tmdb/types/tmdb-movie-details-request'
+import { TMDBMovieGenresRequest } from '@/modules/tmdb/types/tmdb-movie-genres-request'
+import { TMDBMovieImagesRequest } from '@/modules/tmdb/types/tmdb-movie-images-request'
+import { TMDBMovieRecommendationsRequest } from '@/modules/tmdb/types/tmdb-movie-recommendations-request'
+import { TMDBPopularMoviesRequest } from '@/modules/tmdb/types/tmdb-popular-movies-request'
+import { TMDBSimilarMoviesRequest } from '@/modules/tmdb/types/tmdb-similar-movies-request'
+import { TMDBTopRatedMoviesRequest } from '@/modules/tmdb/types/tmdb-top-rated-movies-request'
+import { TMDBTrendingMoviesRequest } from '@/modules/tmdb/types/tmdb-trengind-movies-request'
+import { TMDBUpcomingMoviesRequest } from '@/modules/tmdb/types/tmdb-upcoming-movies-request'
 import { HttpService } from '@nestjs/axios'
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
 import { plainToInstance } from 'class-transformer'
 import { firstValueFrom } from 'rxjs'
-import { MovieDetailsEntity } from '../../db/movie-details.entity'
-import { MovieGenresResponse } from '../../dto/movie/response-dto/movie-genres-response'
-import { MovieImagesResponse } from '../../dto/movie/response-dto/movie-images-response'
-import { PaginatedMovieResponse } from '../../dto/movie/response-dto/paginated-movie-response'
-import { TMDBDiscoverMovieRequest } from './types/tmdb-discover-movies-request'
-import { TMDBMovieDetailsRequest } from './types/tmdb-movie-details-request'
-import { TMDBMovieGenresRequest } from './types/tmdb-movie-genres-request'
-import { TMDBMovieImagesRequest } from './types/tmdb-movie-images-request'
-import { TMDBMovieRecommendationsRequest } from './types/tmdb-movie-recommendations-request'
-import { TMDBPopularMoviesRequest } from './types/tmdb-popular-movies-request'
-import { TMDBSimilarMoviesRequest } from './types/tmdb-similar-movies-request'
-import { TMDBTopRatedMoviesRequest } from './types/tmdb-top-rated-movies-request'
-import { TMDBTrendingMoviesRequest } from './types/tmdb-trengind-movies-request'
-import { TMDBUpcomingMoviesRequest } from './types/tmdb-upcoming-movies-request'
 
 @Injectable()
 export class TMDBService implements OnModuleInit {
@@ -23,16 +23,16 @@ export class TMDBService implements OnModuleInit {
 
     constructor(private readonly httpService: HttpService) {}
 
-    onModuleInit() {
-        this.httpService.axiosRef.interceptors.request.use(config => {
-            const { method, baseURL, url } = config
-            this.logger.verbose(`${method.toUpperCase()} ${baseURL}/${url}`)
-            return config
+    onModuleInit(): any {
+        const axios = this.httpService.axiosRef
+
+        axios.interceptors.request.use(req => {
+            this.logger.verbose(`${req.method.toUpperCase()} ${req.baseURL}/${req.url}`)
+            return req
         })
-        this.httpService.axiosRef.interceptors.response.use(config => {
-            const { data } = config
-            this.logger.verbose(data)
-            return config
+        axios.interceptors.response.use(res => {
+            this.logger.verbose(res.data)
+            return res
         })
     }
 

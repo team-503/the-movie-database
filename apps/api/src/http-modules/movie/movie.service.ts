@@ -1,13 +1,13 @@
+import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genres-response'
+import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
+import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
+import { MovieDetailsEntity, MovieDetailsRepository } from '@/db/movie-details.entity'
+import { MovieRepository } from '@/db/movie.entity'
+import { TMDBService } from '@/modules/tmdb/tmdb.service'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable } from '@nestjs/common'
 import { Cache } from 'cache-manager'
 import ms from 'ms'
-import { MovieDetailsEntity, MovieDetailsRepository } from '../../db/movie-details.entity'
-import { MovieRepository } from '../../db/movie.entity'
-import { MovieGenresResponse } from '../../dto/movie/response-dto/movie-genres-response'
-import { MovieImagesResponse } from '../../dto/movie/response-dto/movie-images-response'
-import { PaginatedMovieResponse } from '../../dto/movie/response-dto/paginated-movie-response'
-import { TMDBService } from '../../modules/tmdb/tmdb.service'
 
 const cacheTTL = ms('1d')
 

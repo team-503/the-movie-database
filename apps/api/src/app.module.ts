@@ -1,20 +1,22 @@
+import { ENV } from '@/common/env'
+import '@/enums'
 import { join } from 'path'
+import { HealthModule } from '@/http-modules/health/health.module'
+import { MovieModule } from '@/http-modules/movie/movie.module'
+import { UserModule } from '@/http-modules/user/user.module'
 import {
     ApolloServerPluginLandingPageLocalDefault,
     ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { CacheModule } from '@nestjs/cache-manager'
-import { Module } from '@nestjs/common'
+import { Logger, Module, Scope } from '@nestjs/common'
+import { INQUIRER } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import config from 'config'
 import ms from 'ms'
-import { ENV } from './common/env'
-import './enums'
-import { AuthModule } from './http-modules/auth/auth.module'
-import { HealthModule } from './http-modules/health/health.module'
-import { MovieModule } from './http-modules/movie/movie.module'
 
 @Module({
     imports: [
@@ -37,7 +39,7 @@ import { MovieModule } from './http-modules/movie/movie.module'
         ]),
         TypeOrmModule.forRoot({
             type: 'sqlite',
-            database: './LOCAL/db.sqlite',
+            database: config.get<string>('db.url'),
             entities: [join(__dirname, '**', '*.entity.{js,ts}')],
             synchronize: ENV.isDevelopment(),
             cache: ENV.isDevelopment(),
@@ -61,10 +63,18 @@ import { MovieModule } from './http-modules/movie/movie.module'
             ],
         }),
         /* http-modules */
-        AuthModule,
         HealthModule,
         MovieModule,
+        UserModule,
         /* modules */
+    ],
+    providers: [
+        {
+            provide: Logger,
+            scope: Scope.TRANSIENT,
+            inject: [INQUIRER],
+            useFactory: (parentClass: object) => new Logger(parentClass.constructor.name),
+        },
     ],
 })
 export class AppModule {}

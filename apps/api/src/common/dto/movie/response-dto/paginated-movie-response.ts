@@ -1,5 +1,5 @@
+import { MovieEntity } from '@/db/movie.entity'
 import { Field, Int, ObjectType } from '@nestjs/graphql'
-import { MovieEntity } from '../../../db/movie.entity'
 
 @ObjectType()
 export class PaginatedMovieResponse {
