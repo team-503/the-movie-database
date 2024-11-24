@@ -1,0 +1,50 @@
+query getMovieDetails($movieId: Int!) {
+    getMovieDetails(movieId: $movieId) {
+        id
+        adult
+        backdrop_path
+        original_language
+        original_title
+        overview
+        popularity
+        poster_path
+        release_date
+        title
+        video
+        vote_average
+        vote_count
+        genres {
+            id
+            name
+        }
+        belongs_to_collection {
+            id
+            name
+            poster_path
+            backdrop_path
+        }
+        budget
+        homepage
+        imdb_id
+        origin_country
+        production_companies {
+            id
+            logo_path
+            name
+            origin_country
+        }
+        production_countries {
+            iso_3166_1
+            name
+        }
+        revenue
+        runtime
+        spoken_languages {
+            english_name
+            iso_639_1
+            name
+        }
+        status
+        tagline
+    }
+}

@@ -1,0 +1,8 @@
+query getMovieGenresList {
+    getMovieGenresList {
+        genres {
+            id
+            name
+        }
+    }
+}

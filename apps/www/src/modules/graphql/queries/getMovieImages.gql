@@ -1,0 +1,31 @@
+query getMovieImages($movieId: Int!) {
+    getMovieImages(movieId: $movieId) {
+        backdrops {
+            aspect_ratio
+            height
+            iso_639_1
+            file_path
+            vote_average
+            vote_count
+            width
+        }
+        posters {
+            aspect_ratio
+            height
+            iso_639_1
+            file_path
+            vote_average
+            vote_count
+            width
+        }
+        logos {
+            aspect_ratio
+            height
+            iso_639_1
+            file_path
+            vote_average
+            vote_count
+            width
+        }
+    }
+}
