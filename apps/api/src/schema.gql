@@ -117,11 +117,11 @@ type AuthResponseType {
 
 type Query {
   getMovieGenresList: MovieGenresResponse!
-  discoverMovies: PaginatedMovieResponse!
-  getPopularMovies: PaginatedMovieResponse!
-  getTopRatedMovies: PaginatedMovieResponse!
+  discoverMovies(page: Int): PaginatedMovieResponse!
+  getPopularMovies(page: Int): PaginatedMovieResponse!
+  getTopRatedMovies(page: Int): PaginatedMovieResponse!
+  getUpcomingMovies(page: Int): PaginatedMovieResponse!
   getTrengindMovies: PaginatedMovieResponse!
-  getUpcomingMovies: PaginatedMovieResponse!
   getMovieDetails(movieId: Int!): MovieDetailsEntity!
   getMovieImages(movieId: Int!): MovieImagesResponse!
   getSimilarMovies(movieId: Int!): PaginatedMovieResponse!

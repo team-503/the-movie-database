@@ -24,28 +24,28 @@ export class MovieResolver {
     */
 
     @Query(() => PaginatedMovieResponse)
-    discoverMovies(): Promise<PaginatedMovieResponse> {
-        return this.movieService.discoverMovies()
+    discoverMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+        return this.movieService.discoverMovies({ page })
     }
 
     @Query(() => PaginatedMovieResponse)
-    getPopularMovies(): Promise<PaginatedMovieResponse> {
-        return this.movieService.getPopularMovies()
+    getPopularMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+        return this.movieService.getPopularMovies({ page })
     }
 
     @Query(() => PaginatedMovieResponse)
-    getTopRatedMovies(): Promise<PaginatedMovieResponse> {
-        return this.movieService.getTopRatedMovies()
+    getTopRatedMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+        return this.movieService.getTopRatedMovies({ page })
+    }
+
+    @Query(() => PaginatedMovieResponse)
+    getUpcomingMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+        return this.movieService.getUpcomingMovies({ page })
     }
 
     @Query(() => PaginatedMovieResponse)
     getTrengindMovies(): Promise<PaginatedMovieResponse> {
         return this.movieService.getTrengindMovies()
-    }
-
-    @Query(() => PaginatedMovieResponse)
-    getUpcomingMovies(): Promise<PaginatedMovieResponse> {
-        return this.movieService.getUpcomingMovies()
     }
 
     /*

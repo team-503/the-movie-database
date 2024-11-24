@@ -27,13 +27,15 @@ export class TMDBService implements OnModuleInit {
         const axios = this.httpService.axiosRef
 
         axios.interceptors.request.use(req => {
-            this.logger.verbose(`${req.method.toUpperCase()} ${req.baseURL}/${req.url}`)
+            const url = new URL(req.url, req.baseURL)
+            const urlSearchParams = new URLSearchParams(req.params)
+            this.logger.verbose(`${req.method.toUpperCase()} ${url}${urlSearchParams}`)
             return req
         })
-        axios.interceptors.response.use(res => {
-            this.logger.verbose(res.data)
-            return res
-        })
+        // axios.interceptors.response.use(res => {
+        //     this.logger.verbose(res.data)
+        //     return res
+        // })
     }
 
     /*

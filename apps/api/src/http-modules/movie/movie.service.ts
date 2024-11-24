@@ -40,40 +40,52 @@ export class MovieService {
     movies
     */
 
-    async discoverMovies(): Promise<PaginatedMovieResponse> {
-        const cacheKey = this.discoverMovies.name
+    async discoverMovies({ page }: { page: number }): Promise<PaginatedMovieResponse> {
+        const cacheKey = `discover/${page}`
         const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
         if (cacheValue) {
             return cacheValue
         }
-        const discoverMovies = await this.tmdbService.discoverMovies()
+        const discoverMovies = await this.tmdbService.discoverMovies({ page })
         this.cacheManager.set(cacheKey, discoverMovies, cacheTTL)
         this.movieRepository.save(discoverMovies.results)
         return discoverMovies
     }
 
-    async getPopularMovies(): Promise<PaginatedMovieResponse> {
-        const cacheKey = this.getPopularMovies.name
+    async getPopularMovies({ page }: { page: number }): Promise<PaginatedMovieResponse> {
+        const cacheKey = `popular/${page}`
         const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
         if (cacheValue) {
             return cacheValue
         }
-        const popularMovies = await this.tmdbService.getPopularMovies()
+        const popularMovies = await this.tmdbService.getPopularMovies({ page })
         this.cacheManager.set(cacheKey, popularMovies, cacheTTL)
         this.movieRepository.save(popularMovies.results)
         return popularMovies
     }
 
-    async getTopRatedMovies(): Promise<PaginatedMovieResponse> {
-        const cacheKey = this.getTopRatedMovies.name
+    async getTopRatedMovies({ page }: { page: number }): Promise<PaginatedMovieResponse> {
+        const cacheKey = `top-rated/${page}`
         const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
         if (cacheValue) {
             return cacheValue
         }
-        const topRatedMovies = await this.tmdbService.getTopRatedMovies()
+        const topRatedMovies = await this.tmdbService.getTopRatedMovies({ page })
         this.cacheManager.set(cacheKey, topRatedMovies, cacheTTL)
         this.movieRepository.save(topRatedMovies.results)
         return topRatedMovies
+    }
+
+    async getUpcomingMovies({ page }: { page: number }): Promise<PaginatedMovieResponse> {
+        const cacheKey = `upcoming/${page}`
+        const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
+        }
+        const upcomingMovies = await this.tmdbService.getUpcomingMovies({ page })
+        this.cacheManager.set(cacheKey, upcomingMovies, cacheTTL)
+        this.movieRepository.save(upcomingMovies.results)
+        return upcomingMovies
     }
 
     async getTrengindMovies(): Promise<PaginatedMovieResponse> {
@@ -86,18 +98,6 @@ export class MovieService {
         this.cacheManager.set(cacheKey, trendingMovies, cacheTTL)
         this.movieRepository.save(trendingMovies.results)
         return trendingMovies
-    }
-
-    async getUpcomingMovies(): Promise<PaginatedMovieResponse> {
-        const cacheKey = this.getUpcomingMovies.name
-        const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
-        if (cacheValue) {
-            return cacheValue
-        }
-        const upcomingMovies = await this.tmdbService.getUpcomingMovies()
-        this.cacheManager.set(cacheKey, upcomingMovies, cacheTTL)
-        this.movieRepository.save(upcomingMovies.results)
-        return upcomingMovies
     }
 
     /*
