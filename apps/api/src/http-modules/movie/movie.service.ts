@@ -89,7 +89,7 @@ export class MovieService {
     }
 
     async getTrengindMovies(): Promise<PaginatedMovieResponse> {
-        const cacheKey = this.getTrengindMovies.name
+        const cacheKey = 'trending'
         const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
         if (cacheValue) {
             return cacheValue
@@ -105,29 +105,54 @@ export class MovieService {
     */
 
     async getMovieDetails(movieId: number): Promise<MovieDetailsEntity> {
-        const dbMovieDetails = await this.movieDetailsRepository.findOne({
-            where: { id: movieId },
-        })
-        if (dbMovieDetails) {
-            return dbMovieDetails
+        // const dbMovieDetails = await this.movieDetailsRepository.findOne({
+        //     where: { id: movieId },
+        // })
+        // if (dbMovieDetails) {
+        //     return dbMovieDetails
+        // }
+        const cacheKey = `details/${movieId}`
+        const cacheValue = await this.cacheManager.get<MovieDetailsEntity>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
         }
         const tmdbMovieDetails = await this.tmdbService.getMovieDetails(movieId)
+        this.cacheManager.set(cacheKey, tmdbMovieDetails, cacheTTL)
         this.movieDetailsRepository.save(tmdbMovieDetails)
         return tmdbMovieDetails
     }
 
-    getMovieImages(movieId: number): Promise<MovieImagesResponse> {
-        return this.tmdbService.getMovieImages(movieId)
+    async getMovieImages(movieId: number): Promise<MovieImagesResponse> {
+        const cacheKey = `images/${movieId}`
+        const cacheValue = await this.cacheManager.get<MovieImagesResponse>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
+        }
+        const movieImages = this.tmdbService.getMovieImages(movieId)
+        this.cacheManager.set(cacheKey, movieImages, cacheTTL)
+        return movieImages
     }
 
     async getSimilarMovies(movieId: number): Promise<PaginatedMovieResponse> {
+        const cacheKey = `similar/${movieId}`
+        const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
+        }
         const similarMovies = await this.tmdbService.getSimilarMovies(movieId)
+        this.cacheManager.set(cacheKey, similarMovies, cacheTTL)
         this.movieRepository.save(similarMovies.results)
         return similarMovies
     }
 
     async getMovieRecommendations(movieId: number): Promise<PaginatedMovieResponse> {
+        const cacheKey = `recommendations/${movieId}`
+        const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
+        }
         const movieRecommendations = await this.tmdbService.getMovieRecommendations(movieId)
+        this.cacheManager.set(cacheKey, movieRecommendations, cacheTTL)
         this.movieRepository.save(movieRecommendations.results)
         return movieRecommendations
     }
