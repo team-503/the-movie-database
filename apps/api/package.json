@@ -29,7 +29,6 @@
         "@nestjs/terminus": "10.2.3",
         "@nestjs/throttler": "6.2.1",
         "@nestjs/typeorm": "10.0.2",
-        "@repo/dto": "workspace:*",
         "@repo/pkg-env": "workspace:*",
         "@repo/pkg-helpers": "workspace:*",
         "@repo/pkg-logger": "workspace:*",

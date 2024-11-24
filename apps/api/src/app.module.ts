@@ -15,6 +15,8 @@ import { INQUIRER } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ApolloServerPluginCacheControl } from 'apollo-server-core/dist/plugin/cacheControl'
+import responseCachePlugin from 'apollo-server-plugin-response-cache'
 import config from 'config'
 import ms from 'ms'
 
@@ -57,6 +59,8 @@ import ms from 'ms'
             introspection: ENV.isDevelopment(),
             includeStacktraceInErrorResponses: ENV.isDevelopment(),
             plugins: [
+                ApolloServerPluginCacheControl({ defaultMaxAge: 5 }) as any,
+                responseCachePlugin() as any,
                 ENV.isDevelopment()
                     ? ApolloServerPluginLandingPageLocalDefault({ footer: false })
                     : ApolloServerPluginLandingPageProductionDefault({ footer: false }),

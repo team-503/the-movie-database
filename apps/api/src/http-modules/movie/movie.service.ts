@@ -41,7 +41,13 @@ export class MovieService {
     */
 
     async discoverMovies(): Promise<PaginatedMovieResponse> {
+        const cacheKey = this.discoverMovies.name
+        const cacheValue = await this.cacheManager.get<PaginatedMovieResponse>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
+        }
         const discoverMovies = await this.tmdbService.discoverMovies()
+        this.cacheManager.set(cacheKey, discoverMovies, cacheTTL)
         this.movieRepository.save(discoverMovies.results)
         return discoverMovies
     }
