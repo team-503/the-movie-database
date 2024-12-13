@@ -1,5 +1,5 @@
-query getPopularMovies {
-    getPopularMovies {
+query getPopularMovies($page: Int) {
+    getPopularMovies(page: $page) {
         page
         results {
             id

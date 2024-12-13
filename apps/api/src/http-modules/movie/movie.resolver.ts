@@ -2,6 +2,7 @@ import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genre
 import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
 import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
 import { MovieDetailsEntity } from '@/db/movie-details.entity'
+import { PageArgs } from '@/http-modules/movie/dto/page-args'
 import { MovieService } from '@/http-modules/movie/movie.service'
 import { Args, Int, Query, Resolver } from '@nestjs/graphql'
 
@@ -24,22 +25,22 @@ export class MovieResolver {
     */
 
     @Query(() => PaginatedMovieResponse)
-    discoverMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+    discoverMovies(@Args({ type: () => PageArgs }) { page }: PageArgs): Promise<PaginatedMovieResponse> {
         return this.movieService.discoverMovies({ page })
     }
 
     @Query(() => PaginatedMovieResponse)
-    getPopularMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+    getPopularMovies(@Args({ type: () => PageArgs }) { page }: PageArgs): Promise<PaginatedMovieResponse> {
         return this.movieService.getPopularMovies({ page })
     }
 
     @Query(() => PaginatedMovieResponse)
-    getTopRatedMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+    getTopRatedMovies(@Args({ type: () => PageArgs }) { page }: PageArgs): Promise<PaginatedMovieResponse> {
         return this.movieService.getTopRatedMovies({ page })
     }
 
     @Query(() => PaginatedMovieResponse)
-    getUpcomingMovies(@Args({ name: 'page', type: () => Int, nullable: true }) page: number): Promise<PaginatedMovieResponse> {
+    getUpcomingMovies(@Args({ type: () => PageArgs }) { page }: PageArgs): Promise<PaginatedMovieResponse> {
         return this.movieService.getUpcomingMovies({ page })
     }
 

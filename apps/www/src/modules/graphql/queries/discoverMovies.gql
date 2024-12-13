@@ -1,5 +1,5 @@
-query discoverMovies {
-    discoverMovies {
+query discoverMovies($page: Int) {
+    discoverMovies(page: $page) {
         page
         results {
             id

@@ -1,5 +1,5 @@
-query getTopRatedMovies {
-    getTopRatedMovies {
+query getTopRatedMovies($page: Int) {
+    getTopRatedMovies(page: $page) {
         page
         results {
             id

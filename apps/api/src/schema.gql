@@ -50,7 +50,7 @@ type MovieDetailsEntity {
   belongs_to_collection: MovieBelongsToCollection
   budget: Float!
   homepage: String!
-  imdb_id: String!
+  imdb_id: String
   origin_country: [String!]!
   production_companies: [MovieProductionCompany!]!
   production_countries: [MovieProductionCountry!]!
@@ -117,10 +117,10 @@ type AuthResponseType {
 
 type Query {
   getMovieGenresList: MovieGenresResponse!
-  discoverMovies(page: Int): PaginatedMovieResponse!
-  getPopularMovies(page: Int): PaginatedMovieResponse!
-  getTopRatedMovies(page: Int): PaginatedMovieResponse!
-  getUpcomingMovies(page: Int): PaginatedMovieResponse!
+  discoverMovies(page: Int = 1): PaginatedMovieResponse!
+  getPopularMovies(page: Int = 1): PaginatedMovieResponse!
+  getTopRatedMovies(page: Int = 1): PaginatedMovieResponse!
+  getUpcomingMovies(page: Int = 1): PaginatedMovieResponse!
   getTrengindMovies: PaginatedMovieResponse!
   getMovieDetails(movieId: Int!): MovieDetailsEntity!
   getMovieImages(movieId: Int!): MovieImagesResponse!

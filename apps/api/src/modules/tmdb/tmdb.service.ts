@@ -51,7 +51,7 @@ export class TMDBService implements OnModuleInit {
     movies
     */
 
-    async discoverMovies(params: TMDBDiscoverMovieRequest = {}): Promise<PaginatedMovieResponse> {
+    async discoverMovies(params: TMDBDiscoverMovieRequest = { include_adult: false }): Promise<PaginatedMovieResponse> {
         const response = await firstValueFrom(this.httpService.get('discover/movie', { params }))
         return response.data
     }

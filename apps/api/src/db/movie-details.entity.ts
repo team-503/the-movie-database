@@ -30,8 +30,8 @@ export class MovieDetailsEntity extends BaseMovieEntity {
     @Field(() => String)
     homepage: string
 
-    @Column()
-    @Field(() => String)
+    @Column({ nullable: true })
+    @Field(() => String, { nullable: true })
     imdb_id: string
 
     @Column({ type: 'json' })

@@ -1,11 +1,10 @@
 import { memo } from 'react'
 import { AppRoutes } from '@/app-routes'
-import { ErrorPage } from '@/pages/error/error-page'
+import { ErrorPage } from '@/pages/error-page'
 import { AnimatePresence } from 'framer-motion'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useLocation } from 'react-router-dom'
 import { Toaster } from '@/components/ui/sonner'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
 
 type AppProps = unknown
 export const App: React.FC<AppProps> = memo(() => {
@@ -17,7 +16,7 @@ export const App: React.FC<AppProps> = memo(() => {
                 <AppRoutes location={location} key={location.pathname} />
             </AnimatePresence>
             <Toaster />
-            <TailwindIndicator />
+            {/* <TailwindIndicator /> */}
         </ErrorBoundary>
     )
 })

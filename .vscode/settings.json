@@ -5,37 +5,5 @@
         }
     ],
     "typescript.preferences.importModuleSpecifier": "non-relative",
-    "typescript.preferences.autoImportFileExcludePatterns": [
-        "@radix-ui/*",
-        "class-variance-authority",
-        "vaul",
-        "postcss",
-        "cmdk"
-    ],
-    "files.exclude": {
-        "**/.gitignore": true,
-        "**/.npmrc": true,
-        "**/.nvmrc": true,
-        "**/.prettierignore": true,
-        "**/pnpm-lock.yaml": true,
-        "**/pnpm-workspace.yaml": true,
-        "**/.turbo": true,
-        "**/dist": true,
-        "**/node_modules": true,
-        //
-        "**/turbo.json": true,
-        "**/prettier.config.cjs": true,
-        "**/tsconfig.*json": true,
-        "**/.env.*": true,
-        //
-        "apps/api/nest-cli.json": true,
-        //
-        "apps/www/components.json": true,
-        "apps/www/eslint.config.js": true,
-        "apps/www/graphql-codegen.ts": true,
-        "apps/www/postcss.config.js": true,
-        "apps/www/tailwind.config.ts": true,
-        "apps/www/vite.config.ts": true,
-        "apps/www/src/__generated__": true
-    }
+    "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui/*", "class-variance-authority", "vaul", "postcss", "cmdk"]
 }

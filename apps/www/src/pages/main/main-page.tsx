@@ -10,11 +10,11 @@ import { MovieCardsListSnapScroll } from '@/modules/movie/components/movie-cards
 
 type MainPageProps = unknown
 export const MainPage: React.FC<MainPageProps> = memo(() => {
-    const { data: discoverMoviesData } = useDiscoverMoviesQuery()
-    const { data: popularMoviesData } = useGetPopularMoviesQuery()
-    const { data: topRatedMoviesData } = useGetTopRatedMoviesQuery()
+    const { data: discoverMoviesData } = useDiscoverMoviesQuery({ variables: { page: 1 } })
+    const { data: popularMoviesData } = useGetPopularMoviesQuery({ variables: { page: 1 } })
+    const { data: topRatedMoviesData } = useGetTopRatedMoviesQuery({ variables: { page: 1 } })
+    const { data: upcomingMoviesData } = useGetUpcomingMoviesQuery({ variables: { page: 1 } })
     const { data: trendingMoviesData } = useGetTrengindMoviesQuery()
-    const { data: upcomingMoviesData } = useGetUpcomingMoviesQuery()
 
     return (
         <div className="~space-y-12/14">
@@ -29,9 +29,9 @@ export const MainPage: React.FC<MainPageProps> = memo(() => {
                 to="/popular"
             />
             <MovieCardsListSnapScroll
-                movies={topRatedMoviesData?.getTopRatedMovies.results ?? []}
-                title="Top rated movies"
-                to="/top-rated"
+                movies={upcomingMoviesData?.getUpcomingMovies.results ?? []}
+                title="Upcoming movies"
+                to="/upcoming"
             />
             <MovieCardsListSnapScroll
                 movies={trendingMoviesData?.getTrengindMovies.results ?? []}
@@ -39,9 +39,9 @@ export const MainPage: React.FC<MainPageProps> = memo(() => {
                 to="/trending"
             />
             <MovieCardsListSnapScroll
-                movies={upcomingMoviesData?.getUpcomingMovies.results ?? []}
-                title="Upcoming movies"
-                to="/upcoming"
+                movies={topRatedMoviesData?.getTopRatedMovies.results ?? []}
+                title="Top rated movies"
+                to="/top-rated"
             />
         </div>
     )

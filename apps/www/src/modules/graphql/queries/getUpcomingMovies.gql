@@ -1,5 +1,5 @@
-query getUpcomingMovies {
-    getUpcomingMovies {
+query getUpcomingMovies($page: Int) {
+    getUpcomingMovies(page: $page) {
         page
         results {
             id

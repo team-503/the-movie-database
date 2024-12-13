@@ -46,7 +46,8 @@ export class MovieService {
         if (cacheValue) {
             return cacheValue
         }
-        const discoverMovies = await this.tmdbService.discoverMovies({ page })
+        const discoverMovies = await this.tmdbService.discoverMovies({ page, include_adult: false })
+        this.filterPaginatedMovieResponseGenres(discoverMovies)
         this.cacheManager.set(cacheKey, discoverMovies, cacheTTL)
         this.movieRepository.save(discoverMovies.results)
         return discoverMovies
@@ -59,6 +60,7 @@ export class MovieService {
             return cacheValue
         }
         const popularMovies = await this.tmdbService.getPopularMovies({ page })
+        this.filterPaginatedMovieResponseGenres(popularMovies)
         this.cacheManager.set(cacheKey, popularMovies, cacheTTL)
         this.movieRepository.save(popularMovies.results)
         return popularMovies
@@ -71,6 +73,7 @@ export class MovieService {
             return cacheValue
         }
         const topRatedMovies = await this.tmdbService.getTopRatedMovies({ page })
+        this.filterPaginatedMovieResponseGenres(topRatedMovies)
         this.cacheManager.set(cacheKey, topRatedMovies, cacheTTL)
         this.movieRepository.save(topRatedMovies.results)
         return topRatedMovies
@@ -83,6 +86,7 @@ export class MovieService {
             return cacheValue
         }
         const upcomingMovies = await this.tmdbService.getUpcomingMovies({ page })
+        this.filterPaginatedMovieResponseGenres(upcomingMovies)
         this.cacheManager.set(cacheKey, upcomingMovies, cacheTTL)
         this.movieRepository.save(upcomingMovies.results)
         return upcomingMovies
@@ -123,13 +127,13 @@ export class MovieService {
     }
 
     async getMovieImages(movieId: number): Promise<MovieImagesResponse> {
-        const cacheKey = `images/${movieId}`
-        const cacheValue = await this.cacheManager.get<MovieImagesResponse>(cacheKey)
-        if (cacheValue) {
-            return cacheValue
-        }
+        // const cacheKey = `images/${movieId}`
+        // const cacheValue = await this.cacheManager.get<MovieImagesResponse>(cacheKey)
+        // if (cacheValue) {
+        //     return cacheValue
+        // }
         const movieImages = this.tmdbService.getMovieImages(movieId)
-        this.cacheManager.set(cacheKey, movieImages, cacheTTL)
+        // this.cacheManager.set(cacheKey, movieImages, cacheTTL)
         return movieImages
     }
 
@@ -140,6 +144,7 @@ export class MovieService {
             return cacheValue
         }
         const similarMovies = await this.tmdbService.getSimilarMovies(movieId)
+        this.filterPaginatedMovieResponseGenres(similarMovies)
         this.cacheManager.set(cacheKey, similarMovies, cacheTTL)
         this.movieRepository.save(similarMovies.results)
         return similarMovies
@@ -152,8 +157,16 @@ export class MovieService {
             return cacheValue
         }
         const movieRecommendations = await this.tmdbService.getMovieRecommendations(movieId)
+        this.filterPaginatedMovieResponseGenres(movieRecommendations)
         this.cacheManager.set(cacheKey, movieRecommendations, cacheTTL)
         this.movieRepository.save(movieRecommendations.results)
         return movieRecommendations
+    }
+
+    private filterPaginatedMovieResponseGenres(paginatedMovieResponses: PaginatedMovieResponse) {
+        const forbiddenGenreIds = [18, 10_749]
+        paginatedMovieResponses.results = paginatedMovieResponses.results.filter(
+            movie => movie.genre_ids.length !== 0 && !movie.genre_ids.some(genreId => forbiddenGenreIds.includes(genreId))
+        )
     }
 }
