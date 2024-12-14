@@ -1,10 +1,9 @@
-import { UserEntity, UserRepository } from '@/db/user.entity'
+import { UserRepository } from '@/db/user.entity'
 import { AuthService } from '@/modules/auth/auth.service'
 import { JwtStrategy } from '@/modules/auth/strategy/jwt.strategy'
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
-import { TypeOrmModule } from '@nestjs/typeorm'
 import config from 'config'
 
 @Module({
@@ -19,7 +18,6 @@ import config from 'config'
                 expiresIn: '21d',
             },
         }),
-        TypeOrmModule.forFeature([UserEntity]),
     ],
     providers: [AuthService, JwtStrategy, UserRepository],
     exports: [AuthService],

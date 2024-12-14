@@ -1,4 +1,4 @@
-export type TMDBTopRatedMoviesRequest = {
+export class TMDBTopRatedMoviesRequest {
     language?: string
     page?: number
     region?: string

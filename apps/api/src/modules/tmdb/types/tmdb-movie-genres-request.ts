@@ -1,3 +1,3 @@
-export type TMDBMovieGenresRequest = {
+export class TMDBMovieGenresRequest {
     language?: string
 }

@@ -1,4 +1,4 @@
-export type TMDBDiscoverMovieRequest = {
+export class TMDBDiscoverMovieRequest {
     include_adult?: boolean
     include_video?: boolean
     language?: string
