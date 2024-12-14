@@ -9,7 +9,7 @@ export const RedirectToAppLayout: React.FC<RedirectToAppLayoutProps> = memo(() =
 
     if (isAuth) {
         // TODO: customize URL
-        return <Navigate to={URLs.main} />
+        return <Navigate to={URLs.main.path} />
     }
 
     return <Outlet />

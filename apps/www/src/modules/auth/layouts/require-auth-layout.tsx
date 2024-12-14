@@ -8,7 +8,7 @@ export const RequireAuthLayout: React.FC<RequireAuthLayoutProps> = memo(() => {
     const isAuth = useIsAuthenticated()
 
     if (!isAuth) {
-        return <Navigate to={URLs.login} />
+        return <Navigate to={URLs.login.path} />
     }
 
     return <Outlet />
