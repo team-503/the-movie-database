@@ -1,0 +1,20 @@
+FROM node:20
+USER root
+WORKDIR /app
+
+ARG appName=api
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+COPY . .
+RUN rm -rf ./apps/*
+COPY ./apps/${appName} ./apps/${appName}
+
+RUN pnpm i
+RUN npx turbo build
+
+WORKDIR /app/apps/${appName}
+EXPOSE 3000
+ENTRYPOINT ["pnpm", "start"]
