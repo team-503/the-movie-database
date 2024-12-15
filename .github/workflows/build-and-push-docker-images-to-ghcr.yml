@@ -4,8 +4,6 @@ on:
     push:
         branches:
             - main
-        tags:
-            - 'v*.*.*'
     pull_request:
         branches:
             - main
@@ -42,12 +40,3 @@ jobs:
               run: |
                   docker build -f Dockerfile.www -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www:latest .
                   docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www:latest
-
-            - name: Sign the published Docker images
-              if: github.event_name != 'pull_request'
-              env:
-                  IMAGE_API: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api:latest
-                  IMAGE_WWW: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www:latest
-              run: |
-                  cosign sign --yes $IMAGE_API
-                  cosign sign --yes $IMAGE_WWW
