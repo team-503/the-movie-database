@@ -1,8 +1,6 @@
-name: Docker
+name: Build and push Docker image to ghcr.io
 
 on:
-  schedule:
-    - cron: '19 13 * * *'
   push:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
