@@ -1,6 +1,6 @@
 {
     "name": "@repo/pkg-env",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "scripts": {
         "dev": "tsup --watch",
         "build": "tsup",
@@ -14,13 +14,13 @@
         "dist/**"
     ],
     "dependencies": {
-        "@repo/pkg-helpers": "workspace:*",
-        "@repo/pkg-logger": "workspace:*",
+        "@repo/pkg-helpers": "*",
+        "@repo/pkg-logger": "*",
         "dotenv": "16.4.5",
         "zod": "3.23.8"
     },
     "devDependencies": {
-        "@repo/config-typescript": "workspace:*",
+        "@repo/config-typescript": "*",
         "@types/node": "20.3.1",
         "tsup": "8.2.2",
         "typescript": "5.3.3"

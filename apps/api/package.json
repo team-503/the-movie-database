@@ -1,6 +1,6 @@
 {
-    "name": "the-movie-database-api",
-    "version": "0.0.0",
+    "name": "api",
+    "version": "1.0.0",
     "scripts": {
         "postinstall": "ts-patch install -s",
         "dev": "NODE_ENV=development nest start --watch",
@@ -29,9 +29,9 @@
         "@nestjs/terminus": "10.2.3",
         "@nestjs/throttler": "6.2.1",
         "@nestjs/typeorm": "10.0.2",
-        "@repo/pkg-env": "workspace:*",
-        "@repo/pkg-helpers": "workspace:*",
-        "@repo/pkg-logger": "workspace:*",
+        "@repo/pkg-env": "*",
+        "@repo/pkg-helpers": "*",
+        "@repo/pkg-logger": "*",
         "axios": "^1.7.7",
         "bcrypt": "^5.1.1",
         "body-parser": "^1.20.3",
@@ -59,7 +59,7 @@
     "devDependencies": {
         "@nestjs/cli": "10.0.0",
         "@nestjs/schematics": "10.0.0",
-        "@repo/config-typescript": "workspace:*",
+        "@repo/config-typescript": "*",
         "@types/config": "3.3.4",
         "@types/cookie-parser": "1.4.7",
         "@types/express": "4.17.17",

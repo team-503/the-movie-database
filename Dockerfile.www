@@ -1,20 +1,33 @@
-FROM node:20
-USER root
+FROM node:lts AS builder
 WORKDIR /app
-
 ARG appName=www
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-
+RUN yarn global add turbo
 COPY . .
-RUN rm -rf ./apps/*
-COPY ./apps/${appName} ./apps/${appName}
+RUN turbo prune --scope=${appName} --docker
 
-RUN pnpm i
-RUN npx turbo build
+# # #
+
+FROM node:lts AS installer
+WORKDIR /app
+ARG appName=www
+
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+RUN yarn install
+
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN yarn turbo run build --filter=${appName}...
+
+# # #
+
+FROM node:lts AS runner
+WORKDIR /app
+ARG appName=www
+
+COPY --from=installer /app .
 
 WORKDIR /app/apps/${appName}
 EXPOSE 3000
-ENTRYPOINT ["pnpm", "start"]
+ENTRYPOINT ["yarn", "start"]
