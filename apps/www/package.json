@@ -5,14 +5,14 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host",
-        "build": "tsc -b && vite build",
+        "build": "vite build",
+        "start": "vite start",
         "lint": "eslint .",
         "lint:fix": "eslint --fix",
         "lint:lockfile": "lockfile-lint --path package-lock.json --allowed-hosts registry.npmjs.org --validate-https",
         "typecheck": "tsc --noEmit",
         "typesync": "typesync",
         "clean": "rm -rf ./node_modules ./dist ./.turbo",
-        "preview": "vite preview",
         "gql:generate": "graphql-codegen --config graphql-codegen.ts"
     },
     "dependencies": {
@@ -69,6 +69,7 @@
         "lockfile-lint": "4.14.0",
         "postcss": "8.4.49",
         "tailwindcss": "3.4.15",
+        "tsc": "2.0.4",
         "typescript": "5.6.2",
         "typescript-eslint": "8.11.0",
         "typesync": "0.13.0",
