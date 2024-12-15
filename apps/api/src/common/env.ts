@@ -4,7 +4,7 @@ import { z } from 'zod'
 const envSchema = z.object({
     NODE_ENV: z.string().optional(),
     PORT: z.number().optional(),
-    TMDB_API_KEY: z.string(),
+    TMDB_API_KEY: z.string().optional(),
 })
 
 export const ENV = new EnvManager(envSchema, { envFilesPaths: ['.env'] }).getEnv()
