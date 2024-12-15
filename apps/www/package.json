@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "vite --host",
         "build": "vite build",
-        "start": "serve -s ./dist",
+        "start": "vite --host",
         "preview": "vite preview",
         "lint": "eslint .",
         "lint:fix": "eslint --fix",

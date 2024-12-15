@@ -1,0 +1,20 @@
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile.api
+        ports:
+            - 4000:4000
+        environment:
+            TMDB_API_KEY: eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTM3MmY1MTU1YjA4ZTE5MWVlNjBiZTUyMTFhYzhlYiIsIm5iZiI6MTczMDkyMjczNy41MjE5MjgzLCJzdWIiOiI2NzJiYzdjMjU1MDgyMDljZjdhZDJlNjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.4zwA0g5NbEUbfDAstU1M4qPjSfQYeQJqRDe9JHEidM0
+
+    www:
+        build:
+            context: .
+            dockerfile: Dockerfile.www
+        ports:
+            - '3000:3000'
+        environment:
+            VITE_API_URL: http://localhost:4000
+        depends_on:
+            - api
