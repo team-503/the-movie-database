@@ -3,6 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql'
 import { CreateTypeOrmEntity, GenericTypeOrmRepository, TypeORMHelper, UpdateTypeOrmEntity } from '@repo/pkg-helpers'
 import { Column, DataSource, Entity } from 'typeorm'
 import { BaseMovieEntity } from './base-movie.entity'
+import { InjectDataSource } from '@nestjs/typeorm'
 
 const tableName = TypeORMHelper.getPrefixedTableName('movies')
 
@@ -21,7 +22,7 @@ export type MovieUpdateEntity = UpdateTypeOrmEntity<MovieEntity, 'id' | 'created
 
 @Injectable()
 export class MovieRepository extends GenericTypeOrmRepository<MovieEntity, MovieCreateEntity, MovieUpdateEntity> {
-    constructor(dataSource: DataSource) {
+    constructor(@InjectDataSource() dataSource: DataSource) {
         super(MovieEntity, dataSource)
     }
 }

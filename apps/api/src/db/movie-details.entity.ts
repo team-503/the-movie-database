@@ -6,6 +6,7 @@ import { MovieSpokenLanguage } from '@/common/dto/movie/movie-spoken-language'
 import { BaseMovieEntity } from '@/db/base-movie.entity'
 import { Injectable } from '@nestjs/common'
 import { Field, Float, ObjectType } from '@nestjs/graphql'
+import { InjectDataSource } from '@nestjs/typeorm'
 import { CreateTypeOrmEntity, GenericTypeOrmRepository, TypeORMHelper, UpdateTypeOrmEntity } from '@repo/pkg-helpers'
 import { Column, DataSource, Entity } from 'typeorm'
 
@@ -78,7 +79,7 @@ export class MovieDetailsRepository extends GenericTypeOrmRepository<
     MovieDetailsCreateEntity,
     MovieDetailsUpdateEntity
 > {
-    constructor(dataSource: DataSource) {
+    constructor(@InjectDataSource() dataSource: DataSource) {
         super(MovieDetailsEntity, dataSource)
     }
 }

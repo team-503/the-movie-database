@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Field, InputType, Int, ObjectType, OmitType, PickType } from '@nestjs/graphql'
+import { InjectDataSource } from '@nestjs/typeorm'
 import { CreateTypeOrmEntity, GenericTypeOrmRepository, TypeORMHelper, UpdateTypeOrmEntity } from '@repo/pkg-helpers'
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
 import { Column, CreateDateColumn, DataSource, Entity, Index, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm'
@@ -49,7 +50,7 @@ export type UserUpdateEntity = UpdateTypeOrmEntity<UserEntity, 'id' | 'createdAt
 
 @Injectable()
 export class UserRepository extends GenericTypeOrmRepository<UserEntity, UserCreateEntity, UserUpdateEntity> {
-    constructor(dataSource: DataSource) {
+    constructor(@InjectDataSource() dataSource: DataSource) {
         super(UserEntity, dataSource)
     }
 }
