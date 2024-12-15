@@ -26,68 +26,28 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Install cosign
-              if: github.event_name != 'pull_request'
-              uses: sigstore/cosign-installer@59acb6260d9c0ba8f4a2f9d9b48431a222b68e20
-              with:
-                  cosign-release: 'v2.2.4'
-
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
-
             - name: Log into registry ${{ env.REGISTRY }}
               if: github.event_name != 'pull_request'
-              uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
-              with:
-                  registry: ${{ env.REGISTRY }}
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Extract Docker metadata for API
-              id: meta_api
-              uses: docker/metadata-action@v5.0.0
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
+              run: |
+                  echo ${{ secrets.GITHUB_TOKEN }} | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
 
             - name: Build and push Docker image for API
-              id: build-and-push-api
-              uses: docker/build-push-action@v5.0.0
-              with:
-                  context: .
-                  file: Dockerfile.api
-                  push: ${{ github.event_name != 'pull_request' }}
-                  tags: ${{ steps.meta_api.outputs.tags }}
-                  labels: ${{ steps.meta_api.outputs.labels }}
-                  cache-from: type=gha
-                  cache-to: type=gha,mode=max
-                  provenance: false
-
-            - name: Extract Docker metadata for WWW
-              id: meta_www
-              uses: docker/metadata-action@v5.0.0
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www
+              if: github.event_name != 'pull_request'
+              run: |
+                  docker build -f Dockerfile.api -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api:latest .
+                  docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api:latest
 
             - name: Build and push Docker image for WWW
-              id: build-and-push-www
-              uses: docker/build-push-action@v5.0.0
-              with:
-                  context: .
-                  file: Dockerfile.www
-                  push: ${{ github.event_name != 'pull_request' }}
-                  tags: ${{ steps.meta_www.outputs.tags }}
-                  labels: ${{ steps.meta_www.outputs.labels }}
-                  cache-from: type=gha
-                  cache-to: type=gha,mode=max
-                  provenance: false
+              if: github.event_name != 'pull_request'
+              run: |
+                  docker build -f Dockerfile.www -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www:latest .
+                  docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www:latest
 
             - name: Sign the published Docker images
-              if: ${{ github.event_name != 'pull_request' }}
+              if: github.event_name != 'pull_request'
               env:
-                  TAGS_API: ${{ steps.meta_api.outputs.tags }}
-                  DIGEST_API: ${{ steps.build-and-push-api.outputs.digest }}
-                  TAGS_WWW: ${{ steps.meta_www.outputs.tags }}
-                  DIGEST_WWW: ${{ steps.build-and-push-www.outputs.digest }}
+                  IMAGE_API: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api:latest
+                  IMAGE_WWW: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-www:latest
               run: |
-                  echo "${TAGS_API}" | xargs -I {} cosign sign --yes {}@${DIGEST_API}
-                  echo "${TAGS_WWW}" | xargs -I {} cosign sign --yes {}@${DIGEST_WWW}
+                  cosign sign --yes $IMAGE_API
+                  cosign sign --yes $IMAGE_WWW
