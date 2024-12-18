@@ -1,6 +1,7 @@
-import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genres-response'
-import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
-import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
+import { MovieGenresResponse } from '@/common/dto/movie/movie-genres-response'
+import { MovieImagesResponse } from '@/common/dto/movie/movie-images-response'
+import { MovieVideosResponse } from '@/common/dto/movie/movie-videos-response'
+import { PaginatedMovieResponse } from '@/common/dto/movie/paginated-movie-response'
 import { MovieDetailsEntity } from '@/db/movie-details.entity'
 import { PageArgs } from '@/http-modules/movie/dto/page-args'
 import { MovieService } from '@/http-modules/movie/movie.service'
@@ -71,5 +72,10 @@ export class MovieResolver {
     @Query(() => PaginatedMovieResponse)
     getMovieRecommendations(@Args('movieId', { type: () => Int }) movieId: number): Promise<PaginatedMovieResponse> {
         return this.movieService.getMovieRecommendations(movieId)
+    }
+
+    @Query(() => MovieVideosResponse)
+    getMovieVideos(@Args('movieId', { type: () => Int }) movieId: number): Promise<MovieVideosResponse> {
+        return this.movieService.getMovieVideos(movieId)
     }
 }

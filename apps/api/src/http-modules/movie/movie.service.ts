@@ -1,6 +1,7 @@
-import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genres-response'
-import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
-import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
+import { MovieGenresResponse } from '@/common/dto/movie/movie-genres-response'
+import { MovieImagesResponse } from '@/common/dto/movie/movie-images-response'
+import { MovieVideosResponse } from '@/common/dto/movie/movie-videos-response'
+import { PaginatedMovieResponse } from '@/common/dto/movie/paginated-movie-response'
 import { MovieDetailsEntity, MovieDetailsRepository } from '@/db/movie-details.entity'
 import { MovieRepository } from '@/db/movie.entity'
 import { TMDBService } from '@/modules/tmdb/tmdb.service'
@@ -161,6 +162,17 @@ export class MovieService {
         this.cacheManager.set(cacheKey, movieRecommendations, cacheTTL)
         this.movieRepository.save(movieRecommendations.results)
         return movieRecommendations
+    }
+
+    async getMovieVideos(movieId: number): Promise<MovieVideosResponse> {
+        const cacheKey = `videos/${movieId}`
+        const cacheValue = await this.cacheManager.get<MovieVideosResponse>(cacheKey)
+        if (cacheValue) {
+            return cacheValue
+        }
+        const movieVideos = await this.tmdbService.getMovieVideos(movieId)
+        this.cacheManager.set(cacheKey, movieVideos, cacheTTL)
+        return movieVideos
     }
 
     private filterPaginatedMovieResponseGenres(paginatedMovieResponses: PaginatedMovieResponse) {

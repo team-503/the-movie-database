@@ -1,12 +1,14 @@
-import { MovieGenresResponse } from '@/common/dto/movie/response-dto/movie-genres-response'
-import { MovieImagesResponse } from '@/common/dto/movie/response-dto/movie-images-response'
-import { PaginatedMovieResponse } from '@/common/dto/movie/response-dto/paginated-movie-response'
+import { MovieGenresResponse } from '@/common/dto/movie/movie-genres-response'
+import { MovieImagesResponse } from '@/common/dto/movie/movie-images-response'
+import { MovieVideosResponse } from '@/common/dto/movie/movie-videos-response'
+import { PaginatedMovieResponse } from '@/common/dto/movie/paginated-movie-response'
 import { MovieDetailsEntity } from '@/db/movie-details.entity'
 import { TMDBDiscoverMovieRequest } from '@/modules/tmdb/types/tmdb-discover-movies-request'
 import { TMDBMovieDetailsRequest } from '@/modules/tmdb/types/tmdb-movie-details-request'
 import { TMDBMovieGenresRequest } from '@/modules/tmdb/types/tmdb-movie-genres-request'
 import { TMDBMovieImagesRequest } from '@/modules/tmdb/types/tmdb-movie-images-request'
 import { TMDBMovieRecommendationsRequest } from '@/modules/tmdb/types/tmdb-movie-recommendations-request'
+import { TMDBMovieVideosRequest } from '@/modules/tmdb/types/tmdb-movie-videos-request'
 import { TMDBPopularMoviesRequest } from '@/modules/tmdb/types/tmdb-popular-movies-request'
 import { TMDBSimilarMoviesRequest } from '@/modules/tmdb/types/tmdb-similar-movies-request'
 import { TMDBTopRatedMoviesRequest } from '@/modules/tmdb/types/tmdb-top-rated-movies-request'
@@ -100,6 +102,11 @@ export class TMDBService implements OnModuleInit {
         params: TMDBMovieRecommendationsRequest = {}
     ): Promise<PaginatedMovieResponse> {
         const response = await firstValueFrom(this.httpService.get(`movie/${movieId}/recommendations`, { params }))
+        return response.data
+    }
+
+    async getMovieVideos(movieId: number, params: TMDBMovieVideosRequest = {}): Promise<MovieVideosResponse> {
+        const response = await firstValueFrom(this.httpService.get(`movie/${movieId}/videos`, { params }))
         return response.data
     }
 }

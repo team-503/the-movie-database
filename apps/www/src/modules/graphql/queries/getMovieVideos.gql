@@ -1,0 +1,17 @@
+query GetMovieVideos($movieId: Int!) {
+    getMovieVideos(movieId: $movieId) {
+        id
+        results {
+            iso_639_1
+            iso_3166_1
+            id
+            name
+            key
+            site
+            size
+            type
+            official
+            published_at
+        }
+    }
+}

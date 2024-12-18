@@ -98,6 +98,24 @@ type MovieImagesResponse {
   logos: [MovieImage!]!
 }
 
+type MovieVideosResponse {
+  id: Int!
+  results: [MovieVideosResults!]!
+}
+
+type MovieVideosResults {
+  iso_639_1: String!
+  iso_3166_1: String!
+  id: String!
+  name: String!
+  key: String!
+  site: String!
+  size: Float!
+  type: String!
+  official: Boolean!
+  published_at: String!
+}
+
 type PaginatedMovieResponse {
   page: Int!
   results: [MovieEntity!]!
@@ -126,6 +144,7 @@ type Query {
   getMovieImages(movieId: Int!): MovieImagesResponse!
   getSimilarMovies(movieId: Int!): PaginatedMovieResponse!
   getMovieRecommendations(movieId: Int!): PaginatedMovieResponse!
+  getMovieVideos(movieId: Int!): MovieVideosResponse!
   me: UserEntity!
 }
 

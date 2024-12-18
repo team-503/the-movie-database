@@ -1,6 +1,6 @@
+import { MovieGenre } from '@/common/dto/movie/movie-genre'
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Type } from 'class-transformer'
-import { MovieGenre } from '../movie-genre'
 
 @ObjectType()
 export class MovieGenresResponse {

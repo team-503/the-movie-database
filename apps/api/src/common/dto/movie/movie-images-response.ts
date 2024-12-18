@@ -1,5 +1,5 @@
+import { MovieImage } from '@/common/dto/movie/movie-image'
 import { Field, ObjectType } from '@nestjs/graphql'
-import { MovieImage } from '../movie-image'
 
 @ObjectType()
 export class MovieImagesResponse {

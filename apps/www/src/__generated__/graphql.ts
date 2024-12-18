@@ -131,6 +131,26 @@ export type MovieSpokenLanguage = {
   name: Scalars['String']['output'];
 };
 
+export type MovieVideosResponse = {
+  __typename?: 'MovieVideosResponse';
+  id: Scalars['Int']['output'];
+  results: Array<MovieVideosResults>;
+};
+
+export type MovieVideosResults = {
+  __typename?: 'MovieVideosResults';
+  id: Scalars['String']['output'];
+  iso_639_1: Scalars['String']['output'];
+  iso_3166_1: Scalars['String']['output'];
+  key: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  official: Scalars['Boolean']['output'];
+  published_at: Scalars['String']['output'];
+  site: Scalars['String']['output'];
+  size: Scalars['Float']['output'];
+  type: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   login: AuthResponseType;
@@ -162,6 +182,7 @@ export type Query = {
   getMovieGenresList: MovieGenresResponse;
   getMovieImages: MovieImagesResponse;
   getMovieRecommendations: PaginatedMovieResponse;
+  getMovieVideos: MovieVideosResponse;
   getPopularMovies: PaginatedMovieResponse;
   getSimilarMovies: PaginatedMovieResponse;
   getTopRatedMovies: PaginatedMovieResponse;
@@ -187,6 +208,11 @@ export type QueryGetMovieImagesArgs = {
 
 
 export type QueryGetMovieRecommendationsArgs = {
+  movieId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetMovieVideosArgs = {
   movieId: Scalars['Int']['input'];
 };
 
@@ -260,6 +286,13 @@ export type GetMovieRecommendationsQueryVariables = Exact<{
 
 
 export type GetMovieRecommendationsQuery = { __typename?: 'Query', getMovieRecommendations: { __typename?: 'PaginatedMovieResponse', page: number, total_pages: number, total_results: number, results: Array<{ __typename?: 'MovieEntity', id: number, adult: boolean, backdrop_path?: string | null, original_language: string, original_title: string, overview: string, popularity: number, poster_path?: string | null, release_date: string, title: string, video: boolean, vote_average: number, vote_count: number, genre_ids: Array<number> }> } };
+
+export type GetMovieVideosQueryVariables = Exact<{
+  movieId: Scalars['Int']['input'];
+}>;
+
+
+export type GetMovieVideosQuery = { __typename?: 'Query', getMovieVideos: { __typename?: 'MovieVideosResponse', id: number, results: Array<{ __typename?: 'MovieVideosResults', iso_639_1: string, iso_3166_1: string, id: string, name: string, key: string, site: string, size: number, type: string, official: boolean, published_at: string }> } };
 
 export type GetPopularMoviesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -609,6 +642,58 @@ export type GetMovieRecommendationsQueryHookResult = ReturnType<typeof useGetMov
 export type GetMovieRecommendationsLazyQueryHookResult = ReturnType<typeof useGetMovieRecommendationsLazyQuery>;
 export type GetMovieRecommendationsSuspenseQueryHookResult = ReturnType<typeof useGetMovieRecommendationsSuspenseQuery>;
 export type GetMovieRecommendationsQueryResult = Apollo.QueryResult<GetMovieRecommendationsQuery, GetMovieRecommendationsQueryVariables>;
+export const GetMovieVideosDocument = gql`
+    query GetMovieVideos($movieId: Int!) {
+  getMovieVideos(movieId: $movieId) {
+    id
+    results {
+      iso_639_1
+      iso_3166_1
+      id
+      name
+      key
+      site
+      size
+      type
+      official
+      published_at
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMovieVideosQuery__
+ *
+ * To run a query within a React component, call `useGetMovieVideosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMovieVideosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMovieVideosQuery({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useGetMovieVideosQuery(baseOptions: Apollo.QueryHookOptions<GetMovieVideosQuery, GetMovieVideosQueryVariables> & ({ variables: GetMovieVideosQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMovieVideosQuery, GetMovieVideosQueryVariables>(GetMovieVideosDocument, options);
+      }
+export function useGetMovieVideosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMovieVideosQuery, GetMovieVideosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMovieVideosQuery, GetMovieVideosQueryVariables>(GetMovieVideosDocument, options);
+        }
+export function useGetMovieVideosSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMovieVideosQuery, GetMovieVideosQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMovieVideosQuery, GetMovieVideosQueryVariables>(GetMovieVideosDocument, options);
+        }
+export type GetMovieVideosQueryHookResult = ReturnType<typeof useGetMovieVideosQuery>;
+export type GetMovieVideosLazyQueryHookResult = ReturnType<typeof useGetMovieVideosLazyQuery>;
+export type GetMovieVideosSuspenseQueryHookResult = ReturnType<typeof useGetMovieVideosSuspenseQuery>;
+export type GetMovieVideosQueryResult = Apollo.QueryResult<GetMovieVideosQuery, GetMovieVideosQueryVariables>;
 export const GetPopularMoviesDocument = gql`
     query getPopularMovies($page: Int) {
   getPopularMovies(page: $page) {
@@ -1052,6 +1137,26 @@ export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
  */
 
 /**
+ * @typedef {Object} MovieVideosResponse
+ * @property {number} id
+ * @property {Array<MovieVideosResults>} results
+ */
+
+/**
+ * @typedef {Object} MovieVideosResults
+ * @property {string} id
+ * @property {string} iso_639_1
+ * @property {string} iso_3166_1
+ * @property {string} key
+ * @property {string} name
+ * @property {boolean} official
+ * @property {string} published_at
+ * @property {string} site
+ * @property {number} size
+ * @property {string} type
+ */
+
+/**
  * @typedef {Object} Mutation
  * @property {AuthResponseType} login
  * @property {AuthResponseType} register
@@ -1072,6 +1177,7 @@ export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
  * @property {MovieGenresResponse} getMovieGenresList
  * @property {MovieImagesResponse} getMovieImages
  * @property {PaginatedMovieResponse} getMovieRecommendations
+ * @property {MovieVideosResponse} getMovieVideos
  * @property {PaginatedMovieResponse} getPopularMovies
  * @property {PaginatedMovieResponse} getSimilarMovies
  * @property {PaginatedMovieResponse} getTopRatedMovies

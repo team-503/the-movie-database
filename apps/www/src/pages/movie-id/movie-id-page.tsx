@@ -1,11 +1,12 @@
 import { memo, useMemo } from 'react'
-import { useGetMovieDetailsQuery, useGetMovieImagesQuery, useGetSimilarMoviesQuery } from '@/__generated__/graphql'
+import { useGetMovieDetailsQuery, useGetMovieImagesQuery, useGetMovieRecommendationsQuery, useGetMovieVideosQuery, useGetSimilarMoviesQuery } from '@/__generated__/graphql'
 import { URLs } from '@/common/urls'
 import { MovieCardsListSnapScroll } from '@/modules/movie/components/movie-cards-list-snap-scroll'
 import dayjs from 'dayjs'
 import { Star } from 'lucide-react'
 import { Navigate, useParams } from 'react-router-dom'
 import { FullscreenImagePreview } from '@/components/fullscreen-image-preview-modal'
+import YouTube from 'react-youtube'
 
 type MovieIdPageProps = unknown
 export const MovieIdPage: React.FC<MovieIdPageProps> = memo(() => {
@@ -13,8 +14,14 @@ export const MovieIdPage: React.FC<MovieIdPageProps> = memo(() => {
     const { data: getMovieDetailsData, loading } = useGetMovieDetailsQuery({ variables: { movieId: Number(id) } })
     const { data: getMovieImagesData } = useGetMovieImagesQuery({ variables: { movieId: Number(id) } })
     const { data: similarMoviesData } = useGetSimilarMoviesQuery({ variables: { movieId: Number(id) } })
+    const { data: movieRecommendationData } = useGetMovieRecommendationsQuery({ variables: { movieId: Number(id) } })
+    const { data: movieVideosData } = useGetMovieVideosQuery({ variables: { movieId: Number(id) } })
 
     const movie = useMemo(() => getMovieDetailsData?.getMovieDetails, [getMovieDetailsData?.getMovieDetails])
+    const youtubeTrailerId = useMemo(() => 
+        movieVideosData?.getMovieVideos.results.find(movie => movie.site?.toLowerCase() === 'youtube'
+        || movie.type?.toLowerCase() === 'trailer')?.key,
+    [movieVideosData?.getMovieVideos.results])
     const imagePaths = useMemo(
         () => [...new Set(getMovieImagesData?.getMovieImages.backdrops.map(({ file_path }) => file_path))].slice(0, 20),
         [getMovieImagesData?.getMovieImages?.backdrops]
@@ -28,7 +35,7 @@ export const MovieIdPage: React.FC<MovieIdPageProps> = memo(() => {
     }
 
     return (
-        <>
+        <div className="~space-y-12/14">
             <div className="flex">
                 {/* left */}
                 <div className="flex-1 p-10">
@@ -81,10 +88,16 @@ export const MovieIdPage: React.FC<MovieIdPageProps> = memo(() => {
                             ))}
                         </div>
                     </section>
+
+                    <section className="space-y-4">
+                        <p className="border-l-4 border-yellow-500 pl-3 text-3xl font-semibold">Video</p>
+                        <YouTube videoId={youtubeTrailerId} className="w-full [&>*]:w-full aspect-video [&>*]:aspect-video" height={500} />
+                    </section>
                 </div>
             </div>
             <MovieCardsListSnapScroll movies={similarMoviesData?.getSimilarMovies.results ?? []} title="Similar movies" />
-        </>
+            <MovieCardsListSnapScroll movies={movieRecommendationData?.getMovieRecommendations.results ?? []} title="Movie recommendations" />
+        </div>
     )
 })
 MovieIdPage.displayName = 'MovieIdPage'
